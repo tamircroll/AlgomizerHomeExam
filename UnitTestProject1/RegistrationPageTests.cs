@@ -1,4 +1,5 @@
-﻿using AlgmizerAutomationFramework.PageObjects;
+﻿using System.Collections.Generic;
+using AlgmizerAutomationFramework.PageObjects;
 using AlgmizerAutomationFramework.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -20,8 +21,25 @@ namespace AlgomizerTests
         {
             var registrationPage = RegistrationPage.LaunchSiteAndGetPage();
             registrationPage.clickTermsAndConditions();
+
             Assert.IsTrue(registrationPage.isTermsAndConditionsDivApears());
         }
+
+        private string somePassword = "Abcdefgh";
+        private string someOtherPassword = "12345678";
+
+        [TestMethod]
+        public void RegistrationPageObject_ConfirmedPasswordDifferentFromPassword_ErrorMessageAppears()
+        {
+            var registrationPage = RegistrationPage.LaunchSiteAndGetPage();
+            registrationPage.SetPassword(somePassword);
+            registrationPage.SetConfirmPassword(someOtherPassword);
+            Keyborad.PressTabButton();
+
+            Assert.IsTrue(registrationPage.isPasswordNotEqualMsgAppears());
+        }
+
+
 
 
 

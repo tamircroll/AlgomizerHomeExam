@@ -15,7 +15,7 @@ namespace AlgomizerTests
         [TestCleanup]
         public void Cleanup()
         {
-            Driver.Instance.Quit();
+//            Driver.Instance.Quit();
         }
     }
 }

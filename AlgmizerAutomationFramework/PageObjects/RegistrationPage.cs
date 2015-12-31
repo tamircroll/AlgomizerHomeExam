@@ -163,5 +163,11 @@ namespace AlgmizerAutomationFramework.PageObjects
         {
             return m_Driver.FindElement(By.ClassName("registration-terms")) != null;
         }
+
+        public bool isPasswordNotEqualMsgAppears()
+        {
+            var errors = m_Driver.FindElements(By.ClassName("error"));
+            return errors.Any(error => error.Text.Contains(@"Passwords don't match, please confirm password"));
+        }
     }
 }
