@@ -14,5 +14,10 @@ namespace AlgmizerAutomationFramework.PageObjects
         {
             return null;
         }
+
+        protected override List<string> classesToValidateList()
+        {
+            return null;
+        }
     }
 }

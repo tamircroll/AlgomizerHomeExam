@@ -15,14 +15,26 @@ namespace AlgmizerAutomationFramework.PageObjects
 
         protected abstract List<string> idsToValidateList();
 
+        protected abstract List<string> classesToValidateList();
+
         public virtual bool isPagePresented()
         {
-            if (idsToValidateList().Any(id => m_Driver.FindElement(By.Id(id)) == null))
-                return false;
+            bool isIdMissing = false;
+            bool isClassMissing = false;
+            List<string> isToValidateList = idsToValidateList();
+            List<string> classesToValidateList = this.classesToValidateList();
+
+            if (isToValidateList != null)
+                isIdMissing = isToValidateList.Any(id => m_Driver.FindElement(By.Id(id)) == null);
+
+            if (classesToValidateList != null)
+                isClassMissing = classesToValidateList.Any(className => m_Driver.FindElement(By.ClassName(className)) == null);
+
+            if (isIdMissing || isClassMissing) return false;
 
             return true;
         }
-        
+
         public static T WaitAndGetPage<T>() where T : PageObjectBase, new()
         {
             return WaitAndGetPage<T>(TimeSpan.FromSeconds(5));
@@ -35,7 +47,7 @@ namespace AlgmizerAutomationFramework.PageObjects
             return page;
         }
 
-        private static void waitForPageToLoad<T>(T i_Page,TimeSpan i_TimeToWait) where T : PageObjectBase
+        private static void waitForPageToLoad<T>(T i_Page, TimeSpan i_TimeToWait) where T : PageObjectBase
         {
             var wait = new WebDriverWait(Driver.Instance, i_TimeToWait);
 

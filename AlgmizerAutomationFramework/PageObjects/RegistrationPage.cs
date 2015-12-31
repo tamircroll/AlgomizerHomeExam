@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using AlgmizerAutomationFramework.Utilities;
 using OpenQA.Selenium;
@@ -20,8 +21,13 @@ namespace AlgmizerAutomationFramework.PageObjects
                 "acc_setup_wrapper",
                 "confirm_pwd",
                 "phone_prefix",
-                "phone_number",
+                "phone_number"
             };
+        }
+
+        protected override List<string> classesToValidateList()
+        {
+            return null;
         }
 
         public static RegistrationPage LaunchSiteAndGetPage()
@@ -143,6 +149,19 @@ namespace AlgmizerAutomationFramework.PageObjects
         {
             m_Driver.FindElement(By.ClassName("common-btn")).Click();
             return WaitAndGetPage<T>();
+        }
+
+        public void clickTermsAndConditions()
+        {
+            var elements = m_Driver.FindElements(By.ClassName("ng-binding"));
+            var tcLink = elements.First(element => element.Text == "Terms and Conditions");
+
+            tcLink.Click();
+        }
+
+        public bool isTermsAndConditionsDivApears()
+        {
+            return m_Driver.FindElement(By.ClassName("registration-terms")) != null;
         }
     }
 }

@@ -19,7 +19,8 @@ namespace AlgomizerTests
         public void RegistrationPageObject_ClickTermsAndConditionLink_DivWithTermsAndConditionsAppear()
         {
             var registrationPage = RegistrationPage.LaunchSiteAndGetPage();
-            
+            registrationPage.clickTermsAndConditions();
+            Assert.IsTrue(registrationPage.isTermsAndConditionsDivApears());
         }
 
 
