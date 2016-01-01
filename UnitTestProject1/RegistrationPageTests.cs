@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using AlgmizerAutomationFramework.PageObjects;
 using AlgmizerAutomationFramework.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

@@ -11,7 +11,7 @@ namespace AlgmizerAutomationFramework.PageObjects
 
         protected IWebDriver m_Driver = Driver.Instance;
 
-        protected List<string> idsToValidate;
+        protected List<string> m_IdsToValidate;
 
         protected abstract List<string> idsToValidateBy();
 
