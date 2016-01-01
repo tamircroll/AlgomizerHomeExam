@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Driver.cs" />
+    <Compile Include="PageObjects\HomePage.cs" />
     <Compile Include="PageObjects\WaitForMAilPage.cs" />
     <Compile Include="Utilities\ePhonePrefix.cs" />
     <Compile Include="PageObjects\PageObjectBase.cs" />

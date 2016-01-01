@@ -37,7 +37,7 @@ namespace AlgmizerAutomationFramework.PageObjects
 
         public static T WaitAndGetPage<T>() where T : PageObjectBase, new()
         {
-            return WaitAndGetPage<T>(TimeSpan.FromSeconds(5));
+            return WaitAndGetPage<T>(TimeSpan.FromSeconds(10));
         }
 
         public static T WaitAndGetPage<T>(TimeSpan i_TimeToWait) where T : PageObjectBase, new()
@@ -45,6 +45,14 @@ namespace AlgmizerAutomationFramework.PageObjects
             T page = new T();
             waitForPageToLoad(page, i_TimeToWait);
             return page;
+        }
+
+        protected void switchTab(string i_Url)
+        {
+            var popup = m_Driver.WindowHandles[1]; // handler for the new tab
+            if (string.IsNullOrEmpty(popup)) throw new Exception("tab was not opened");
+            if (m_Driver.SwitchTo().Window(popup).Url != i_Url) throw new Exception("Not requested Url"); // url is OK  
+            m_Driver.SwitchTo().Window(m_Driver.WindowHandles[1]);
         }
 
         private static void waitForPageToLoad<T>(T i_Page, TimeSpan i_TimeToWait) where T : PageObjectBase

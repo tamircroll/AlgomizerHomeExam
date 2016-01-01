@@ -164,6 +164,24 @@ namespace AlgmizerAutomationFramework.PageObjects
             return m_Driver.FindElement(By.ClassName("registration-terms")) != null;
         }
 
+        public HomePage clickHomeLinkAndGetHomePage()
+        {
+            clickHomeLink();
+            switchTab("http://www.algomizer.com/");
+            return WaitAndGetPage<HomePage>();
+        }
+
+        public void clickHomeLink()
+        {
+            var footer = m_Driver.FindElement(By.ClassName("footer-links"));
+            var links = footer.FindElements(By.TagName("li"));
+            IWebElement homeLink = links.FirstOrDefault(link => link.Text == "Home");
+
+            if (homeLink == null) throw new Exception("Could't find home link");
+
+            homeLink.Click();
+       }
+
         public bool isPasswordNotEqualMsgAppears()
         {
             var errors = m_Driver.FindElements(By.ClassName("error"));
