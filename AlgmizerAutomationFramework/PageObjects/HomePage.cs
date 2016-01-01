@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.PageObjects;
 
 namespace AlgmizerAutomationFramework.PageObjects
 {
@@ -19,12 +14,12 @@ namespace AlgmizerAutomationFramework.PageObjects
             return false;
         }
 
-        protected override List<string> idsToValidateList()
+        protected override List<string> idsToValidateBy()
         {
             return null;
         }
 
-        protected override List<string> classesToValidateList()
+        protected override List<string> classesToValidateBy()
         {
             return null;
         }

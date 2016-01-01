@@ -10,12 +10,12 @@ namespace AlgmizerAutomationFramework.PageObjects
             return m_Driver.FindElement(By.TagName("h1")).Text.Contains(@"Done! We've just sent a validation email to ");
         }
 
-        protected override List<string> idsToValidateList()
+        protected override List<string> idsToValidateBy()
         {
             return null;
         }
 
-        protected override List<string> classesToValidateList()
+        protected override List<string> classesToValidateBy()
         {
             return null;
         }

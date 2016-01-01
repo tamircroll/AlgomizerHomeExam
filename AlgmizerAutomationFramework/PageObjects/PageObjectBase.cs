@@ -13,16 +13,16 @@ namespace AlgmizerAutomationFramework.PageObjects
 
         protected List<string> idsToValidate;
 
-        protected abstract List<string> idsToValidateList();
+        protected abstract List<string> idsToValidateBy();
 
-        protected abstract List<string> classesToValidateList();
+        protected abstract List<string> classesToValidateBy();
 
         public virtual bool isPagePresented()
         {
             bool isIdMissing = false;
             bool isClassMissing = false;
-            List<string> isToValidateList = idsToValidateList();
-            List<string> classesToValidateList = this.classesToValidateList();
+            List<string> isToValidateList = idsToValidateBy();
+            List<string> classesToValidateList = this.classesToValidateBy();
 
             if (isToValidateList != null)
                 isIdMissing = isToValidateList.Any(id => m_Driver.FindElement(By.Id(id)) == null);

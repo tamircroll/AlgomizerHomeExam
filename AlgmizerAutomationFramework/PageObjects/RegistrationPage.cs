@@ -10,7 +10,7 @@ namespace AlgmizerAutomationFramework.PageObjects
 {
     public class RegistrationPage : PageObjectBase
     {
-        protected override List<string> idsToValidateList()
+        protected override List<string> idsToValidateBy()
         {
             return new List<string>
             {
@@ -25,9 +25,12 @@ namespace AlgmizerAutomationFramework.PageObjects
             };
         }
 
-        protected override List<string> classesToValidateList()
+        protected override List<string> classesToValidateBy()
         {
-            return null;
+            return new List<string>
+            {
+                "common-btn"
+            };
         }
 
         public static RegistrationPage LaunchSiteAndGetPage()
@@ -105,12 +108,12 @@ namespace AlgmizerAutomationFramework.PageObjects
 
         public RegistrationPage SetPhonePrefix(ePhonePrefix i_ePrefix)
         {
-            m_Driver.FindElement(By.Id("phone_prefix")).Click();
+            openPhonePrefixesTable();
             Thread.Sleep(500);
             ReadOnlyCollection<IWebElement> prefixes = m_Driver.FindElement(By.ClassName("dropdown-menu"))
                 .FindElements(By.TagName("li"));
 
-            foreach (IWebElement prefix in prefixes)
+            foreach (var prefix in prefixes)
             {
                 IWebElement countryCode = prefix.FindElement(By.ClassName("fll"));
                 if (countryCode.Text == i_ePrefix.ToString())
@@ -122,6 +125,23 @@ namespace AlgmizerAutomationFramework.PageObjects
 
             throw new Exception("Couldn't find the phone prefix: " + i_ePrefix);
         }
+
+        public List<string> GetAllPhonePrefixesNamesFromTable()
+        {
+            List<string> toReturn = new List<string>();
+            openPhonePrefixesTable();
+
+            var allPrefixes = m_Driver.FindElement(By.ClassName("dropdown-menu")).FindElements(By.TagName("li"));
+
+            foreach (var prefix in allPrefixes)
+            {
+                IWebElement countryCode = prefix.FindElement(By.ClassName("fll"));
+                toReturn.Add(countryCode.Text);
+            }
+
+            return toReturn;
+        }
+
 
         public RegistrationPage SetPhoneNumber(string i_Phone)
         {
@@ -151,7 +171,7 @@ namespace AlgmizerAutomationFramework.PageObjects
             return WaitAndGetPage<T>();
         }
 
-        public void clickTermsAndConditions()
+        public void ClickTermsAndConditions()
         {
             var elements = m_Driver.FindElements(By.ClassName("ng-binding"));
             var tcLink = elements.First(element => element.Text == "Terms and Conditions");
@@ -159,18 +179,18 @@ namespace AlgmizerAutomationFramework.PageObjects
             tcLink.Click();
         }
 
-        public bool isTermsAndConditionsDivApears()
+        public bool IsTermsAndConditionsDivApears()
         {
             return m_Driver.FindElement(By.ClassName("registration-terms")) != null;
         }
 
-        public HomePage clickHomeLinkAndGetHomePage()
+        public HomePage ClickHomeLinkAndGetHomePage()
         {
-            clickHomeLink();
+            ClickHomeLink();
             return switchTabAndGetPage<HomePage>("http://www.algomizer.com/");
         }
 
-        public void clickHomeLink()
+        public void ClickHomeLink()
         {
             var footer = m_Driver.FindElement(By.ClassName("footer-links"));
             var links = footer.FindElements(By.TagName("li"));
@@ -179,12 +199,27 @@ namespace AlgmizerAutomationFramework.PageObjects
             if (homeLink == null) throw new Exception("Could't find home link");
 
             homeLink.Click();
-       }
+        }
 
-        public bool isPasswordNotEqualMsgAppears()
+        public bool IsPasswordNotEqualMsgAppears()
         {
             var errors = m_Driver.FindElements(By.ClassName("error"));
             return errors.Any(error => error.Text.Contains(@"Passwords don't match, please confirm password"));
+        }
+
+        private void openPhonePrefixesTable()
+        {
+            var dropdownWrapper = m_Driver.FindElement(By.ClassName("dropdown_wrap"));
+            bool tableIsOpen = dropdownWrapper.GetAttribute("class").Contains("Open");
+
+            if (!tableIsOpen)
+                m_Driver.FindElement(By.Id("phone_prefix")).Click();
+
+        }
+
+        public bool IsNextButtonEnabled()
+        {
+            return m_Driver.FindElement(By.ClassName("common-btn")).Enabled;
         }
     }
 }
