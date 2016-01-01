@@ -167,8 +167,7 @@ namespace AlgmizerAutomationFramework.PageObjects
         public HomePage clickHomeLinkAndGetHomePage()
         {
             clickHomeLink();
-            switchTab("http://www.algomizer.com/");
-            return WaitAndGetPage<HomePage>();
+            return switchTabAndGetPage<HomePage>("http://www.algomizer.com/");
         }
 
         public void clickHomeLink()

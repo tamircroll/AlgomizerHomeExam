@@ -47,7 +47,13 @@ namespace AlgmizerAutomationFramework.PageObjects
             return page;
         }
 
-        protected void switchTab(string i_Url)
+        protected T switchTabAndGetPage<T>(string i_Url) where T : PageObjectBase, new()
+        {
+            switchTab(i_Url);
+            return WaitAndGetPage<T>();
+        }
+
+        private void switchTab(string i_Url)
         {
             var popup = m_Driver.WindowHandles[1]; // handler for the new tab
             if (string.IsNullOrEmpty(popup)) throw new Exception("tab was not opened");
